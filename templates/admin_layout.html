@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>{% block title %}{% endblock %}</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome CSS (for icons) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-ZFnRrKQh/2sMW1LcUj2xf5czMXi5xZvTqC3aHLQ+H9Wtdzlm6ev89uyrSwb8J0LjPf2YdRNkFqGbo/8PVZZLJ3A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    /* Custom styles for the sidebar */
+    #sidebar {
+      height: 100vh;
+      background-color: #343a40; /* Dark background color */
+      color: #ffffff; /* Text color */
+    }
+
+    #sidebar h3 {
+      color: #ffffff; /* Header text color */
+    }
+
+    #sidebar ul li {
+      padding: 10px;
+    }
+
+    #sidebar ul li a {
+      color: #ffffff; /* Link text color */
+      text-decoration: none;
+      display: block;
+      transition: color 0.3s ease;
+    }
+
+    #sidebar ul li a:hover {
+      color: #ffc107; /* Hovered link text color */
+    }
+
+    /* Custom styles for the navbar */
+    #navbar {
+      background-color: #343a40; /* Dark background color */
+    }
+
+    #navbar a {
+      color: #ffffff; /* Navbar link text color */
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    #navbar a:hover {
+      color: #ffc107; /* Hovered navbar link text color */
+    }
+  </style>
+</head>
+<body>
+
+<div class="d-flex">
+  <!-- Sidebar -->
+  <nav id="sidebar">
+    <div class="p-4">
+      <h3>Dashboard</h3>
+      <ul class="list-unstyled">
+        <li><a href="{{ url_for('adminaddlocation') }}"><i class="fas fa-home"></i> Add Location</a></li>
+        <li><a href="{{ url_for('adminlocationlist') }}"><i class="fas fa-cogs"></i> Locations List</a></li>
+        <li><a href="#"><i class="fas fa-envelope"></i> Link 3</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main content -->
+  <div class="flex-grow-1">
+    <!-- Navbar -->
+    <nav id="navbar" class="navbar navbar-expand-lg navbar-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="{{ url_for('admindashboard') }}"><img src="/static/images/protection.png" style="width:35px;height:35px;"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('adminlogout') }}"><i class="fas fa-user"></i>Logout</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Your content here -->
+    <div class="container p-4">
+        {%block content %}{% endblock %}
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap JS (optional, but required for some features) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+{%extends "user_layout.html" %}
+{% block col %} 
+<div class="col-md-9">
+    {% if msg|length %}
+        <div class="alert alert-success">
+            <strong>{{ msg }}</strong>
+        </div>
+    {% endif %}
+    <div class="row" style="margin-top:2%;">
+        <div class="col-md-4">
+            <div class="custom-card" style="border:2px solid #ff735c">
+                <img src="/static/images/car.png" class="card-img-top" alt="Car Image" />
+                <div class="card-body">
+                    <h5 class="card-title">Vehicles</h5>
+                    <p class="card-text">
+                        <small class="text-muted"><a href="{{ url_for('vehicles') }}">Manage your vehicles</a></small>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

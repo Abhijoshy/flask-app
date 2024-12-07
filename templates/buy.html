@@ -1,0 +1,37 @@
+{%extends "user_layout.html" %}
+{% block col %} 
+<style>
+    .card-form {
+        width: 400px;
+        height: 400px;
+        left: 21%;
+        margin-top: 1%;
+    }
+</style>
+<div class="card card-form">
+    <div class="card-body">
+        <h2 class="card-title text-center">Card Details</h2>
+        <form action="{{ url_for('buyplan') }}" method="post">
+            <div class="mb-3">
+                <label for="cardNumber" class="form-label">Card Number</label>
+                <input type="text" class="form-control" id="cardNumber" name="cardno" placeholder="Enter card number">
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <label for="expiryDate" class="form-label">Expiry Date</label>
+                    <input type="text" class="form-control" id="expiryDate" name="expiry" placeholder="MM/YY">
+                </div>
+                <div class="col">
+                    <label for="cvv" class="form-label">CVV</label>
+                    <input type="text" class="form-control" id="cvv" name="cvv" placeholder="CVV">
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="cardholderName" class="form-label">Cardholder Name</label>
+                <input type="text" class="form-control" id="cardholderName" name="holder" placeholder="Enter cardholder name">
+            </div>
+            <button type="submit" class="btn btn-primary" style="margin:auto;display:block;">Buy</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

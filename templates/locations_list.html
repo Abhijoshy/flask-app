@@ -1,0 +1,61 @@
+{%extends "admin_layout.html" %}
+{% block title %}Admin | Locations List{% endblock %}
+{% block content %} 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+  function deletelocation(lid)
+  {
+    $("#lid").val(lid);
+    $("#myModal").modal('show');
+  }
+</script>
+  <h2>Locations List</h2>
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Place Name</th>
+          <th>Latitude</th>
+          <th>Longitude</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if locations %}
+            {% for location in locations %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ location.place_name }}</td>
+                    <td>{{ location.latitude }}</td>
+                    <td>{{ location.longitude }}</td>
+                    <td><button class="btn btn-warning" style="color:white;" onclick="deletelocation({{ location.id }})"><img src="/static/images/delete.png" style="width:20px;height:20px;"></button></td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+  <div class="modal" id="myModal">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+  
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Delete</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+  
+        <!-- Modal body -->
+        <div class="modal-body">
+          <form action="{{ url_for('admindeletelocation') }}" method="post">
+            <p class="text-center">Are you sure want to delete location?</p>
+            <input type="hidden" name="lid" id="lid">
+            <button type="submit" class="btn btn-primary" style="margin:auto;display:block;">Delete</button>
+          </form>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,83 @@
+{%extends "layout.html" %}
+{% block title %}Car Parking | Dashboard{% endblock %}
+{% block content %} 
+
+<style>
+    .sidebar {
+        background-color: #343a40;
+        color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        height:100vh;
+    }
+
+    .sidebar ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .sidebar ul li {
+        padding: 10px 0;
+        border-bottom: 1px solid white;
+    }
+
+    .sidebar ul li a {
+        color: #fff;
+        text-decoration: none;
+    }
+
+    .sidebar ul li a:hover {
+        text-decoration: underline;
+    }
+
+    .custom-card {
+            border: none;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .custom-card img {
+            width: 100%;
+            height: 200px; /* Adjust the height as needed */
+            object-fit: cover;
+        }
+
+        .custom-card .card-body {
+            background-color: #f8f9fa;
+            text-align: center;
+        }
+
+        .custom-card .card-title {
+            font-size: 24px;
+        }
+
+        .custom-card .card-text a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .custom-card .card-text a:hover {
+            text-decoration: underline;
+        }
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3">
+            <div class="sidebar">
+                <h4>Dashboard</h4>
+                <ul>
+                    <li><a href="{{ url_for('parkings') }}">Parkings</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        {%block col %}{% endblock %}
+    </div>
+</div>
+  
+{% endblock %}

@@ -1,0 +1,135 @@
+{%extends "user_layout.html" %}
+{% block col %} 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<Script>
+    function parkvehicle(vid)
+    {
+        alert(vid);
+        $("#vhid").val(vid);
+        $("#myModal").modal('show');
+    }
+</Script>
+<div class="col-md-9">
+    {% if v_flag == 1 %}
+    {% if msg|length %}
+        <div class="alert alert-success">
+            <strong>{{ msg }}</strong>
+        </div>
+        {% if msg == 'You cannot have more than 5 free parking records!' %}
+            <a class="btn btn-primary" href="{{ url_for('buyplan') }}" style="margin: auto;margin-bottom: 1%;display: block;width: 20%;">Buy</a>
+        {% endif %}
+    {% endif %}
+    <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Vehicle No.</th>
+              <th>Owner Name</th>
+              <th>Owner Address</th>
+              <th>Owner DOB</th>
+              <th>License Type</th>
+              <th>License No.</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for vehicle in vehicles %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ vehicle.vehicle_no }}</td>
+                    <td>{{ vehicle.owner_name }}</td>
+                    <td>{{ vehicle.owner_address }}</td>
+                    <td>{{ vehicle.owner_dob }}</td>
+                    <td>{{ vehicle.owner_license_type }}</td>
+                    <td>{{ vehicle.owner_license_no }}</td>
+                    <td>
+                        <button class="btn btn-primary" data-bs-toggle="tooltip" title="Park Vehicle" onclick="parkvehicle({{ vehicle.id }})"><img src="/static/images/parked-car.png" style="width:30px;height:30px;"></button>
+                    </td>
+                </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+        <div class="alert alert-success alert-dismissible" style="background-color:#ff735c;color: white;">
+            <p class="text-center">You don't have any registered vehicle. Please register one.</p>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <form action="{{ url_for('vehicles') }}" method="post" style="width: 50%;margin: auto;display: block;border: 3px solid #385a64;padding: 2%;border-radius: 5px;">
+                    <div class="form-group">
+                        <label>Vehicle No.</label>
+                        <input type="text" class="form-control" name="vhno" pattern="[0-9]{10}" placeholder="should be of 10 numbers" required>
+                    </div><br/>
+                    <div class="form-group">
+                        <label>Owner Name</label>
+                        <input type="text" class="form-control" name="oname" required>
+                    </div><br/>
+                    <div class="form-group">
+                        <label>Owner Address</label>
+                        <input type="text" class="form-control" name="oaddress" required>
+                    </div><br/>
+                    <div class="form-group">
+                        <label>Owner DOB</label>
+                        <input type="date" class="form-control" name="odob" type="date" required>
+                    </div><br/>
+                    <div class="form-group">
+                        <label>Owner License Type</label>
+                        <select class="form-control" name="oltype" required>
+                            <option>Select</option>
+                            <option value="learning">Learning</option>
+                            <option value="permanent">Permanent</option>
+                        </select>
+                    </div><br/>
+                    <div class="form-group">
+                        <label>Owner License Number</label>
+                        <input type="text" class="form-control" name="olnum" pattern="[0-9]{16}" placeholder="should be of 16 numbers" required>
+                    </div><br/>
+                    <button type="submit" class="btn" style="background-color:#ff735c;color: white;width:100%;">Submit</button>
+                </form>
+            </div>
+        </div>
+    {% endif %}
+    <div class="row" style="margin-top:2%;">
+    </div>
+</div>
+<div class="modal" id="myModal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Park Vehicle</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form action="{{ url_for('parkvehicle') }}" method="post">
+            <div class="form-group">
+                <label>Set Location</label>
+                {% set locations = getAllLocations() %}
+                {% if locations %}
+                    <select class="form-control" name="location_id">
+                        <option>Select</option>
+                        {% for location in locations %}
+                            <option value="{{ location.id }}">{{location.place_name}}</option>
+                        {% endfor %}
+                    </select>
+                {% else %}
+                    <p class="text-center">No location found</p>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label>Parking Date</label>
+                <input type="date" class="form-control" name="parking_date">
+            </div>
+            <div class="form-group">
+                <label>Parking Time</label>
+                <input type="time" class="form-control" name="parking_time">
+            </div><br/>
+            <input type="hidden" id="vhid" name="vhid">
+            <button class="btn btn-success" style="margin:auto;display:block;">Add Parking</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
