@@ -39,12 +39,11 @@ jobs:
 
         # Connect to EC2 and deploy the application
         ssh -o StrictHostKeyChecking=no -i ec2-key.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
-        # Stop and remove any running container on port 5000
-        EXISTING_CONTAINER=$(docker ps --filter "publish=5000" --format "{{.ID}}")
-        if [ -n "$EXISTING_CONTAINER" ]; then
-            echo "Stopping and removing existing container using port 5000..."
-            docker stop $EXISTING_CONTAINER || true
-            docker rm $EXISTING_CONTAINER || true
+        # Stop and remove any existing container named "flask-app"
+        if [ $(docker ps -aq -f name=flask-app) ]; then
+            echo "Stopping and removing existing container named 'flask-app'..."
+            docker stop flask-app || true
+            docker rm flask-app || true
         fi
 
         # Pull the latest image from ECR
