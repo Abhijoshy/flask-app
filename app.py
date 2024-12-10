@@ -9,7 +9,7 @@ app = Flask(__name__)
 app.secret_key = os.urandom(24).hex()
 app.jinja_env.auto_reload = True
 app.config['TEMPLATES_AUTO_RELOAD'] = True
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Mysql@123@localhost/parking'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Mysql%40123@10.0.0.5/parking'
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 
